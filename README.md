@@ -8,9 +8,9 @@ Weekly Airflow job that reads post metrics for each completed creator–business
 
 ## Problem
 
-A creator posts for a local business on Froker. The business owner gets a link to an Instagram post. That's it. No metrics, no explanation, no verdict on whether it worked.
+A creator posts for a local business on the platform. The business owner gets a link to an Instagram post. That's it. No metrics, no explanation, no verdict on whether it worked.
 
-**Result:** Businesses can't tell if Froker campaigns drive real value. They don't renew. Froker loses its commission revenue. The creator-business relationship ends after one deal.
+**Result:** Businesses can't tell if a campaign on the platforms drive real value. They don't renew. the platform loses its commission revenue. The creator-business relationship ends after one deal.
 
 ---
 
