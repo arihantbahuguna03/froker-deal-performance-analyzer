@@ -1,5 +1,5 @@
 """
-Froker Deal Performance Analyzer
+Creator Deal Performance Analyzer
 ==================================
 Weekly Airflow job that reads post metrics for each completed creator–business
 deal and uses Claude 3.5 Sonnet to write a plain-English performance report
@@ -11,7 +11,7 @@ No LLM orchestration frameworks — direct API calls only.
 Problem:
   A creator posts for a local business. The business owner has no idea
   if it worked. They get a link to an Instagram post, nothing else.
-  Without a clear ROI story, businesses don't renew — and Froker
+  Without a clear ROI story, businesses don't renew — and the platform
   loses its commission revenue.
 
 Solution:
@@ -109,7 +109,7 @@ def post_report_to_slack(deal: dict, report: str) -> None:
 
 def run_analyzer(deals: list[dict] | None = None) -> None:
     deals = deals or DEMO_DEALS
-    print(f"\nFroker Deal Performance Analyzer — {datetime.now().strftime('%Y-%m-%d')}")
+    print(f"\nDeal Performance Analyzer — {datetime.now().strftime('%Y-%m-%d')}")
     print("="*65)
 
     for deal in deals:

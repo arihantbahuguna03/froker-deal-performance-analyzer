@@ -1,5 +1,5 @@
 """
-Airflow DAG — Froker Deal Performance Analyzer
+Airflow DAG — Deal Performance Analyzer
 Runs every Monday at 9am. Generates Claude-powered performance reports
 for all deals completed in the previous week and posts to Slack.
 """
@@ -9,7 +9,7 @@ from datetime import datetime, timedelta
 from airflow import DAG
 from airflow.operators.python import PythonOperator
 
-DAG_ID    = "froker_deal_performance_analyzer"
+DAG_ID    = "deal_performance_analyzer"
 DAG_OWNER = "demo-owner@demo.com"
 
 default_args = {
@@ -26,7 +26,7 @@ with DAG(
     schedule="0 9 * * 1",
     start_date=datetime(2024, 8, 1),
     catchup=False,
-    tags=["froker", "deals", "performance", "claude"],
+    tags=["deals", "performance", "claude"],
 ) as dag:
 
     def run_reports():

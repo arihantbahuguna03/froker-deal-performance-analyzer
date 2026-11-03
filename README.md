@@ -1,4 +1,4 @@
-# Froker Deal Performance Analyzer
+# Deal Performance Analyzer
 
 Weekly Airflow job that reads post metrics for each completed creator–business deal and uses Claude 3.5 Sonnet to write a plain-English performance report — automatically delivered to the business owner every Monday morning.
 
