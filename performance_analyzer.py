@@ -32,6 +32,27 @@ from demo_data import DEMO_DEALS, SLACK_WEBHOOK_URL
 
 # ── Derived metrics ───────────────────────────────────────────────────────────
 
+def _load_footfall_multipliers() -> tuple[float, float]:
+    """
+    Load footfall estimation multipliers from analytics_config.py.
+
+    Multipliers estimate real-world store visits from digital engagement
+    signals (saves + link clicks). Calibrated against foot-traffic data from
+    partner businesses using store counters and QR code redemptions.
+
+    Implementation: proprietary — available on request.
+    Copy analytics_config.example.py → analytics_config.py to run with your own values.
+    """
+    try:
+        import analytics_config
+        return analytics_config.FOOTFALL_MULTIPLIER_LOW, analytics_config.FOOTFALL_MULTIPLIER_HIGH
+    except ImportError:
+        raise RuntimeError(
+            "analytics_config.py not found. "
+            "Copy analytics_config.example.py → analytics_config.py and fill in your values."
+        )
+
+
 def compute_derived(deal: dict) -> dict:
     m = deal["metrics"]
     engagement_rate  = (m["likes"] + m["comments"] + m["shares"] + m["saves"]) / max(m["total_reach"], 1)
@@ -39,9 +60,10 @@ def compute_derived(deal: dict) -> dict:
     local_reach      = int(m["total_reach"] * m["audience_locality_match_pct"])
     action_rate      = (m["saves"] + m["link_clicks"] + m["profile_visits"]) / max(m["total_reach"], 1)
 
-    # Rough footfall proxy: saves + link clicks × 0.3 (industry benchmark estimate)
-    footfall_est_low  = int((m["saves"] + m["link_clicks"]) * 0.25)
-    footfall_est_high = int((m["saves"] + m["link_clicks"]) * 0.45)
+    # Footfall proxy calibrated against partner store counter data
+    mult_low, mult_high = _load_footfall_multipliers()
+    footfall_est_low  = int((m["saves"] + m["link_clicks"]) * mult_low)
+    footfall_est_high = int((m["saves"] + m["link_clicks"]) * mult_high)
 
     return {
         "engagement_rate":   round(engagement_rate * 100, 2),

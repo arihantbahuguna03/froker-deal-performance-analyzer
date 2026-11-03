@@ -1,0 +1,4 @@
+analytics_config.py
+*.pyc
+__pycache__/
+.env
