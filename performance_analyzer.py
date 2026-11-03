@@ -53,6 +53,9 @@ def _load_footfall_multipliers() -> tuple[float, float]:
         )
 
 
+_FOOTFALL_MULT_LOW, _FOOTFALL_MULT_HIGH = _load_footfall_multipliers()
+
+
 def compute_derived(deal: dict) -> dict:
     m = deal["metrics"]
     engagement_rate  = (m["likes"] + m["comments"] + m["shares"] + m["saves"]) / max(m["total_reach"], 1)
@@ -61,9 +64,8 @@ def compute_derived(deal: dict) -> dict:
     action_rate      = (m["saves"] + m["link_clicks"] + m["profile_visits"]) / max(m["total_reach"], 1)
 
     # Footfall proxy calibrated against partner store counter data
-    mult_low, mult_high = _load_footfall_multipliers()
-    footfall_est_low  = int((m["saves"] + m["link_clicks"]) * mult_low)
-    footfall_est_high = int((m["saves"] + m["link_clicks"]) * mult_high)
+    footfall_est_low  = int((m["saves"] + m["link_clicks"]) * _FOOTFALL_MULT_LOW)
+    footfall_est_high = int((m["saves"] + m["link_clicks"]) * _FOOTFALL_MULT_HIGH)
 
     return {
         "engagement_rate":   round(engagement_rate * 100, 2),
